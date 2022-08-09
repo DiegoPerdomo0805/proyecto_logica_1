@@ -33,9 +33,9 @@ if __name__ == '__main__':
     contador = 1
 
     for clause in clauses:
-      result, literals = bruteForce(clause)
+      result = bruteForce(clause)
 
-      args = f'Exito con combinación: {literals}' if result else 'Es insatisfacible'
+      args = f'Exito con combinación: {result[1]}' if result[0] else 'Es insatisfacible'
       print(f'[Clausula {contador}] {args}')
       contador =+ 1
   
@@ -44,9 +44,9 @@ if __name__ == '__main__':
     contador = 1
 
     for clause in clauses:
-      result, literals = DPLL(clause)
-      
-      args = f'Exito con combinación: {literals}' if result else 'Es insatisfacible'
+      result = DPLL(clause)
+
+      args = f'Exito con combinación: {result[1]}' if result[0] else 'Es insatisfacible'
       print(f'[Clausula {contador}] {args}')
       contador =+ 1
   

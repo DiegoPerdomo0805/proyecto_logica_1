@@ -56,4 +56,4 @@ def bruteForce(items):
                 check = check or value
             satisfied = satisfied and check
         
-    return (satisfied, posibility)
+    return [satisfied, posibility]

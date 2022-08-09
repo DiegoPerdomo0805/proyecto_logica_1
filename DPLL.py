@@ -83,14 +83,14 @@ def simplify(B, L, I):
 
   return B, I
 
-def DPLL(B, I:dict = {}) -> tuple:
+def DPLL(B, I:dict = {}):
   '''Implementacion de Algoritno DPLL'''
   
   if len(B) == 0: 
-    return True, I
+    return [True, I]
     
   if check_disjunction(B): 
-    return False, []
+    return [False, []]
 
   if isinstance(B[0], set):
     for i in range(len(B)):
@@ -100,10 +100,13 @@ def DPLL(B, I:dict = {}) -> tuple:
   L = exp[randint(0, len(exp) - 1)]
 
   result, I1 = DPLL(*simplify(deepcopy(B), L, deepcopy(I)))
+
   if result: 
-    return True, I1
+    return [True, I1]
 
   result, I2 = DPLL(*simplify(deepcopy(B), logical_not(L), deepcopy(I)))
-  if result: return True, I2
   
-  return False, []
+  if result: 
+    return [True, I2]
+  
+  return [False, []]
