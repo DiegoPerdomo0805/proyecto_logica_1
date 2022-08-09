@@ -28,7 +28,10 @@ def bruteForce(clause):
 
       #busca cada elemento que está negado, luego lo vuelve positivo.
       if "!" in literal: 
-        literal = literal[1]
+        if(literal[0] == "!"):
+            literal = literal[1]
+        elif(literal[1] == "!"):
+            literal = literal[0]
 
       #almacena cada literal distinta (siempre positiva) en un array
       if not literal in literales: 
@@ -70,5 +73,6 @@ def bruteForce(clause):
     if verify:
       return [True, option]
       
+  #si no es válido, no retorna nada y se indica en el menu principal.
   return [False, None]
 
