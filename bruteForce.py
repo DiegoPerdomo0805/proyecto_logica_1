@@ -21,35 +21,54 @@
 import itertools as it
 
 def bruteForce(clause):
-  variables = []
+  literales = []
 
-  for item in clause:
-    for var in item:
-      if var[0] == "!": var = var[1]
-      if not var in variables: variables.append(var)
+  for clause_elements in clause:
+    for literal in clause_elements:
 
-  values = [True, False]
-  allPosible = it.product(values, repeat=len(variables))
-  allPosible = [{
-    variable: posibility[variables.index(variable)]
-    for variable in variables
-  } for posibility in allPosible]
+      #busca cada elemento que está negado, luego lo vuelve positivo.
+      if "!" in literal: 
+        literal = literal[1]
 
-  for i in range(len(allPosible)):
-    posibility = allPosible[i]
-    satisfied = True
+      #almacena cada literal distinta (siempre positiva) en un array
+      if not literal in literales: 
+        literales.append(literal)
+
+  #ccuenta cuantos literales distintos hay
+  n = len(literales)
+
+  #producto cartesiano de las literales y asigna valores a las opciones.
+  # AQUI EL FUNCIONAMIENTO DE FUERZA BRUTA: Todas las posibles opciones se declaran aquí. 
+  options = [{variable: posibility[literales.index(variable)]
+    for variable in literales
+  } for posibility in (it.product([True, False], repeat=n))]
+
+
+  #verifica cada opción posible en la clausula indicada
+  for option in options:
+    verify = True
+    check = True
 
     for disjuncion in clause:
-      djValue = False
-      for variable in disjuncion:
-        inversion = True if variable[0] == "!" else False
+      disjuncion_Value = False
 
-        if inversion: variable = variable[1]
-        value = posibility[variable] ^ inversion
-        djValue = djValue or value
-      satisfied = satisfied and djValue
+      for variable in disjuncion:
+        if variable[0] == "!":
+          check = True 
+        else: 
+          check = False
+
+        if check: 
+          variable = variable[1]
+          
+        value = option[variable] ^ check
+        disjuncion_Value = disjuncion_Value or value
+        
+      #si sí es válido el disjunction_value, entonces se retorna true junto con las opciones que permitieron el funcionamiento correcto.
+      verify = verify and disjuncion_Value
       
-    if satisfied:
-      return [True, posibility]
+    if verify:
+      return [True, option]
+      
   return [False, None]
 
