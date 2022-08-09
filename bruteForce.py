@@ -20,7 +20,20 @@
 
 import itertools as it
 
+def opt(literales, n):
+  ''' 
+  producto cartesiano de las literales y asigna valores a las opciones.
+  
+  AQUI EL FUNCIONAMIENTO DE FUERZA BRUTA: Todas las posibles opciones se declaran aquí. 
+  '''
+
+  return [{variable: posibility[literales.index(variable)]
+    for variable in literales
+  } for posibility in (it.product([True, False], repeat=n))]
+
+
 def bruteForce(clause):
+  '''Implementacion de Algoritmo SAT'''
   literales = []
 
   for clause_elements in clause:
@@ -40,12 +53,8 @@ def bruteForce(clause):
   #ccuenta cuantos literales distintos hay
   n = len(literales)
 
-  #producto cartesiano de las literales y asigna valores a las opciones.
-  # AQUI EL FUNCIONAMIENTO DE FUERZA BRUTA: Todas las posibles opciones se declaran aquí. 
-  options = [{variable: posibility[literales.index(variable)]
-    for variable in literales
-  } for posibility in (it.product([True, False], repeat=n))]
-
+  #calcula todas las opciones
+  options = opt(literales, n)
 
   #verifica cada opción posible en la clausula indicada
   for option in options:

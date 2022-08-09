@@ -84,7 +84,7 @@ def simplify(B, L, I):
   return B, I
 
 def DPLL(B, I:dict = {}):
-  '''Implementacion de Algoritno DPLL'''
+  '''Implementacion de Algoritmo DPLL'''
   
   if len(B) == 0: 
     return [True, I]
