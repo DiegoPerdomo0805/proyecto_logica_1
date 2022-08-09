@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
       args = f'Exito con combinación: {result[1]}' if result[0] else 'Es insatisfacible'
       print(f'[Clausula {contador}] {args}')
-      contador =+ 1
+      contador = contador + 1
   
   def programa2():
     print('\n------- DPLL -------\n')
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
       args = f'Exito con combinación: {result[1]}' if result[0] else 'Es insatisfacible'
       print(f'[Clausula {contador}] {args}')
-      contador =+ 1
+      contador = contador + 1
   
   #Menu
   while True:

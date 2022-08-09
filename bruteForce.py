@@ -20,40 +20,36 @@
 
 import itertools as it
 
-def bruteForce(items):
-    variables = []
+def bruteForce(clause):
+  variables = []
 
-    for item in items:
-        for var in item:
-            if var[0] == "!": 
-                var = var[1]
-            if not var in variables: 
-                variables.append(var)
+  for item in clause:
+    for var in item:
+      if var[0] == "!": var = var[1]
+      if not var in variables: variables.append(var)
 
-    values = [True, False]
-    allPosible = it.product(values, repeat=len(variables))
-    allPosible = [{
-        variable: posibility[variables.index(variable)]
-        for variable in variables
-    } for posibility in allPosible]
+  values = [True, False]
+  allPosible = it.product(values, repeat=len(variables))
+  allPosible = [{
+    variable: posibility[variables.index(variable)]
+    for variable in variables
+  } for posibility in allPosible]
 
-    for i in range(len(allPosible)):
-        posibility = allPosible[i]
-        satisfied = True
+  for i in range(len(allPosible)):
+    posibility = allPosible[i]
+    satisfied = True
 
-        for item in items:
-            check = False
-            for variable in item:
-                inverse = False
-                
-                if variable[0] == "!":
-                    inverse = True
-                
-                if inverse: 
-                    variable = variable[1]
-                
-                value = posibility[variable] ^ inverse
-                check = check or value
-            satisfied = satisfied and check
-        
-    return [satisfied, posibility]
+    for disjuncion in clause:
+      djValue = False
+      for variable in disjuncion:
+        inversion = True if variable[0] == "!" else False
+
+        if inversion: variable = variable[1]
+        value = posibility[variable] ^ inversion
+        djValue = djValue or value
+      satisfied = satisfied and djValue
+      
+    if satisfied:
+      return [True, posibility]
+  return [False, None]
+
