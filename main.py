@@ -22,26 +22,33 @@ if __name__ == '__main__':
   from DPLL import DPLL
   from bruteForce import bruteForce
   from read import openFile
-  #Cláusulas a analizar en algortimo
   
   clauses = openFile()#Clausulas a analizar en algortimo importadas del archivo de texto
+
   #Resultados
-  
   print("RESULTADOS DE SIMULACIÓN E IMPLEMENTACIÓN:")
   
   def programa1():
-    print('\n------- Por fuerza bruta -------\n')
-    for i in range(len(clauses)):
-      result, literals = bruteForce(clauses[i])
+    print('\n------- Fuerza Bruta -------\n')
+    contador = 1
+
+    for clause in clauses:
+      result, literals = bruteForce(clause)
+
       args = f'Exito con combinación: {literals}' if result else 'Es insatisfacible'
-      print(f'Clausula {i + 1} {args}')
+      print(f'[Clausula {contador}] {args}')
+      contador =+ 1
   
   def programa2():
-    print('\n------- Utilizando DPLL -------\n')
-    for i in range(len(clauses)):
-      result, literals = DPLL(clauses[i])
+    print('\n------- DPLL -------\n')
+    contador = 1
+
+    for clause in clauses:
+      result, literals = DPLL(clause)
+      
       args = f'Exito con combinación: {literals}' if result else 'Es insatisfacible'
-      print(f'Clausula {i + 1} {args}')
+      print(f'[Clausula {contador}] {args}')
+      contador =+ 1
   
   #Menu
   while True:
